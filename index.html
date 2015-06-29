@@ -514,7 +514,7 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel1">
 <li><a href="#_introduction">1. Introduction</a></li>
 <li><a href="#_getting_started">2. Getting started</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_maven">2.1. Maven</a></li>
 <li><a href="#_gradle">2.2. Gradle</a></li>
 </ul>
@@ -588,8 +588,8 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>The project is published in JCenter and Maven Central.</p>
 </div>
-<div class="sect3">
-<h4 id="_maven">2.1. Maven</h4>
+<div class="sect2">
+<h3 id="_maven">2.1. Maven</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;repositories&gt;</span>
@@ -611,8 +611,8 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_gradle">2.2. Gradle</h4>
+<div class="sect2">
+<h3 id="_gradle">2.2. Gradle</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy">repositories {
@@ -631,26 +631,7 @@ compile <span class="string"><span class="delimiter">&quot;</span><span class="c
 <div class="sect2">
 <h3 id="_generate_markup_from_local_swagger_file">3.1. Generate Markup from local Swagger file</h3>
 <div class="paragraph">
-<p>Using Swagger2Markup is simple:</p>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>Create a <code>Swagger2MarkupConverter.Builder</code> by specifying the source location (which can be any absolute file path)</p>
-</li>
-<li>
-<p>Specify the Markup language you want to use (ASCIIDOC is the default Markuplanguage)</p>
-</li>
-<li>
-<p>Build an instance of the <code>Swagger2MarkupConverter</code></p>
-</li>
-<li>
-<p>Invoke the <code>intoFolder</code> method by specifying the output directory</p>
-</li>
-<li>
-<p>By default the <code>Swagger2MarkupConverter</code> creates three files: <em>overview.adoc</em>, <em>paths.adoc</em> and <em>definitions.adoc</em></p>
-</li>
-</ol>
+<p>Using Swagger2Markup is simple.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -673,6 +654,25 @@ compile <span class="string"><span class="delimiter">&quot;</span><span class="c
     }
 }</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Create a <code>Swagger2MarkupConverter.Builder</code> by specifying the source location (which can be any absolute file path)</p>
+</li>
+<li>
+<p>Specify the Markup language you want to use (ASCIIDOC is the default Markuplanguage)</p>
+</li>
+<li>
+<p>Build an instance of the <code>Swagger2MarkupConverter</code></p>
+</li>
+<li>
+<p>Invoke the <code>intoFolder</code> method by specifying the output directory</p>
+</li>
+<li>
+<p>By default the <code>Swagger2MarkupConverter</code> creates three files: <em>overview.adoc</em>, <em>paths.adoc</em> and <em>definitions.adoc</em></p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
@@ -1216,7 +1216,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 <div id="footer">
 <div id="footer-text">
 Version 0.7.0<br>
-Last updated 2015-06-29 12:02:50 MESZ
+Last updated 2015-06-29 12:23:16 MESZ
 </div>
 </div>
 </body>
