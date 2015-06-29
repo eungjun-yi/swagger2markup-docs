@@ -544,17 +544,34 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_include_json_and_xml_schema_files">3.8. Include JSON and XML Schema files.</a></li>
 </ul>
 </li>
-<li><a href="#_screenshots">4. Screenshots</a>
+<li><a href="#_gradle_plugin">4. Gradle Plugin</a>
 <ul class="sectlevel2">
-<li><a href="#_swagger_source">4.1. Swagger source</a></li>
-<li><a href="#_generated_asciidoc">4.2. Generated AsciiDoc</a></li>
-<li><a href="#_generated_markdown">4.3. Generated Markdown</a></li>
-<li><a href="#_generated_html_using_asciidoctorj">4.4. Generated HTML using AsciidoctorJ</a></li>
-<li><a href="#_generated_pdf_using_asciidoctorj">4.5. Generated PDF using AsciidoctorJ</a></li>
+<li><a href="#_getting_started_2">4.1. Getting started</a></li>
+<li><a href="#_using_the_plugin">4.2. Using the plugin</a></li>
+<li><a href="#_example">4.3. Example</a></li>
 </ul>
 </li>
-<li><a href="#_license">5. License</a></li>
-<li><a href="#_community_contributions">6. Community contributions</a></li>
+<li><a href="#_demo">5. Demo</a>
+<ul class="sectlevel2">
+<li><a href="#_full_example">5.1. Full example</a>
+<ul class="sectlevel3">
+<li><a href="#_gradle_build_script">5.1.1. Gradle build script</a></li>
+<li><a href="#_generate_swagger_json_during_an_unit_test_with_springfox_staticdocs">5.1.2. Generate Swagger JSON during an unit test with springfox-staticdocs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_screenshots">6. Screenshots</a>
+<ul class="sectlevel2">
+<li><a href="#_swagger_source">6.1. Swagger source</a></li>
+<li><a href="#_generated_asciidoc">6.2. Generated AsciiDoc</a></li>
+<li><a href="#_generated_markdown">6.3. Generated Markdown</a></li>
+<li><a href="#_generated_html_using_asciidoctorj">6.4. Generated HTML using AsciidoctorJ</a></li>
+<li><a href="#_generated_pdf_using_asciidoctorj">6.5. Generated PDF using AsciidoctorJ</a></li>
+</ul>
+</li>
+<li><a href="#_license">7. License</a></li>
+<li><a href="#_community_contributions">8. Community contributions</a></li>
 </ul>
 </div>
 </div>
@@ -1134,10 +1151,256 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 </div>
 </div>
 <div class="sect1">
-<h2 id="_screenshots">4. Screenshots</h2>
+<h2 id="_gradle_plugin">4. Gradle Plugin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Swagger2Markup Gradle Plugin simplifies the usage of Swagger2Markup. The Plugin adds a Gradle task which converts a Swagger JSON or YAML file into several AsciiDoc or GitHub Flavored Markdown documents.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started_2">4.1. Getting started</h3>
+<div class="paragraph">
+<p>The project is published in JCenter and Maven Central.</p>
+</div>
+<div class="paragraph">
+<p>Add the following snippet to your Gradle build file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'io.github.robwin:swagger2markup-gradle-plugin:{version}'
+    }
+}
+
+apply plugin: 'io.github.robwin.swagger2markup'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_plugin">4.2. Using the plugin</h3>
+<div class="paragraph">
+<p>The plugin adds a new task named <code>convertSwagger2markup</code>. This task exposes a few properties as part of its configuration.</p>
+</div>
+<div class="hdlist">
+<div class="title">Properties</div>
+<table>
+<tr>
+<td class="hdlist1">
+inputDir
+</td>
+<td class="hdlist2">
+<p>specifies the directory where the swagger source is located. Use <code>inputDir file('src/docs/swagger')</code><br>
+Type: File, but any object convertible with <code>project.file</code> can be passed.<br>
+Default: <code>src/docs/swagger</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+outputDir
+</td>
+<td class="hdlist2">
+<p>specifies the directory where the output should be stored. Use <code>outputDir file("${buildDir}/asciidoc")</code><br>
+Type: File, but any object convertible with <code>project.file</code> can be passed.<br>
+Default: <code>$buildDir/asciidoc</code>.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+examplesDir
+</td>
+<td class="hdlist2">
+<p>specifies the directory where example snippets from spring-restdocs are located.<br>
+Type: File, but any object convertible with <code>project.file</code> can be passed.<br>
+Default: empty (not mandatory)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+descriptionsDir
+</td>
+<td class="hdlist2">
+<p>specifies the directory where hand-written descriptions are located.<br>
+Type: File, but any object convertible with <code>project.file</code> can be passed.<br>
+Default: empty (not mandatory)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+schemasDir
+</td>
+<td class="hdlist2">
+<p>specifies the directory where JSON or XML schema files are located.<br>
+Type: File, but any object convertible with <code>project.file</code> can be passed.<br>
+Default: empty (not mandatory)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+markupLanguage
+</td>
+<td class="hdlist2">
+<p>specifies the markup output format.<br>
+Type: MarkupLanguage. Can be MarkupLanguage.ASCIIDOC or MarkupLanguage.MARKDOWN<br>
+Default: <code>MarkupLanguage.ASCIIDOC</code></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+separatedDefinitions
+</td>
+<td class="hdlist2">
+<p>specifies if a definition file per model should be generated.<br>
+Type: boolean<br>
+Default: <code>false</code></p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example">4.3. Example</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">convertSwagger2markup {
+    inputDir file(<span class="string"><span class="delimiter">'</span><span class="content">src/docs/swagger</span><span class="delimiter">'</span></span>)
+    examplesDir file(<span class="string"><span class="delimiter">'</span><span class="content">src/docs/asciidoc/generated</span><span class="delimiter">'</span></span>)
+    descriptionsDir file(<span class="string"><span class="delimiter">'</span><span class="content">src/docs/asciidoc</span><span class="delimiter">'</span></span>)
+    schemasDir file(<span class="string"><span class="delimiter">'</span><span class="content">src/docs/schemas</span><span class="delimiter">'</span></span>)
+    separatedDefinitions <span class="predefined-constant">true</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration above would result in call to Swagger2Markup as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Swagger2MarkupConverter.from(<span class="string"><span class="delimiter">&quot;</span><span class="content">src/docs/swagger</span><span class="delimiter">&quot;</span></span>)
+    .withExamples(<span class="string"><span class="delimiter">&quot;</span><span class="content">src/docs/asciidoc/generated</span><span class="delimiter">&quot;</span></span>)
+    .withDescriptions(<span class="string"><span class="delimiter">&quot;</span><span class="content">src/docs/asciidoc</span><span class="delimiter">&quot;</span></span>)
+    .withSchemas(<span class="string"><span class="delimiter">&quot;</span><span class="content">src/docs/schemas</span><span class="delimiter">&quot;</span></span>)
+    .withSeparatedDefinitions().build()
+    .intoFolder(<span class="string"><span class="delimiter">&quot;</span><span class="content">build/asciidoc</span><span class="delimiter">&quot;</span></span>);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_demo">5. Demo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The quickest way to get started is to look at the <a href="https://github.com/RobWin/swagger2markup#using-swagger2markup">Swagger2Markup user guide</a> and the demo project <a href="https://github.com/RobWin/spring-swagger2markup-demo">spring-swagger2markup-demo</a>. The demo shows how to generate static docs (HTML5 and PDF) with the Swagger2Markup Gradle Plugin and serve them as static content in a Spring Boot App under <a href="http://localhost:9080/docs/index.html" class="bare">http://localhost:9080/docs/index.html</a> and <a href="http://localhost:9080/docs/index.pdf" class="bare">http://localhost:9080/docs/index.pdf</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_full_example">5.1. Full example</h3>
+<div class="sect3">
+<h4 id="_gradle_build_script">5.1.1. Gradle build script</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath <span class="string"><span class="delimiter">'</span><span class="content">org.asciidoctor:asciidoctor-gradle-plugin:1.5.2</span><span class="delimiter">'</span></span>
+        classpath <span class="string"><span class="delimiter">'</span><span class="content">org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.6</span><span class="delimiter">'</span></span>
+        classpath <span class="string"><span class="delimiter">'</span><span class="content">io.github.robwin:swagger2markup-gradle-plugin:0.1.0</span><span class="delimiter">'</span></span>
+    }
+}
+
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">'</span><span class="content">org.asciidoctor.convert</span><span class="delimiter">'</span></span>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">'</span><span class="content">io.github.robwin.swagger2markup</span><span class="delimiter">'</span></span>
+
+ext {
+    swaggerOutputDir = file(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">${</span>buildDir<span class="inline-delimiter">}</span></span><span class="content">/swagger</span><span class="delimiter">&quot;</span></span>)
+    asciiDocOutputDir = file(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">${</span>buildDir<span class="inline-delimiter">}</span></span><span class="content">/asciidoc</span><span class="delimiter">&quot;</span></span>)
+}
+
+test {
+    systemProperty <span class="string"><span class="delimiter">'</span><span class="content">io.springfox.staticdocs.outputDir</span><span class="delimiter">'</span></span>, swaggerOutputDir
+    outputs.dir swaggerOutputDir
+}
+
+convertSwagger2markup {
+    dependsOn test
+    inputDir swaggerOutputDir
+}
+
+asciidoctor {
+    dependsOn convertSwagger2markup
+    sources {
+        include <span class="string"><span class="delimiter">'</span><span class="content">index.adoc</span><span class="delimiter">'</span></span>
+    }
+    backends = [<span class="string"><span class="delimiter">'</span><span class="content">html5</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">pdf</span><span class="delimiter">'</span></span>]
+    attributes = [
+            <span class="key">doctype</span>: <span class="string"><span class="delimiter">'</span><span class="content">book</span><span class="delimiter">'</span></span>,
+            <span class="key">toc</span>: <span class="string"><span class="delimiter">'</span><span class="content">left</span><span class="delimiter">'</span></span>,
+            <span class="key">toclevels</span>: <span class="string"><span class="delimiter">'</span><span class="content">2</span><span class="delimiter">'</span></span>,
+            <span class="key">numbered</span>: <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span>,
+            <span class="key">sectlinks</span>: <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span>,
+            <span class="key">sectanchors</span>: <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span>,
+            <span class="key">hardbreaks</span>: <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span>,
+            <span class="key">generated</span>: asciiDocOutputDir
+    ]
+}
+
+jar {
+    dependsOn asciidoctor
+    from (<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">${</span>asciidoctor.outputDir<span class="inline-delimiter">}</span></span><span class="content">/html5</span><span class="delimiter">&quot;</span></span>) {
+        into <span class="string"><span class="delimiter">'</span><span class="content">static/docs</span><span class="delimiter">'</span></span>
+    }
+    from (<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">${</span>asciidoctor.outputDir<span class="inline-delimiter">}</span></span><span class="content">/pdf</span><span class="delimiter">&quot;</span></span>) {
+        into <span class="string"><span class="delimiter">'</span><span class="content">static/docs</span><span class="delimiter">'</span></span>
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_generate_swagger_json_during_an_unit_test_with_springfox_staticdocs">5.1.2. Generate Swagger JSON during an unit test with springfox-staticdocs</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@WebAppConfiguration</span>
+<span class="annotation">@RunWith</span>(SpringJUnit4ClassRunner.class)
+<span class="annotation">@ContextConfiguration</span>(classes = Application.class, loader = SpringApplicationContextLoader.class)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Swagger2MarkupTest</span> {
+
+    <span class="annotation">@Autowired</span>
+    <span class="directive">private</span> WebApplicationContext context;
+
+    <span class="directive">private</span> MockMvc mockMvc;
+
+    <span class="annotation">@Before</span>
+    <span class="directive">public</span> <span class="type">void</span> setUp() {
+        <span class="local-variable">this</span>.mockMvc = MockMvcBuilders.webAppContextSetup(<span class="local-variable">this</span>.context)
+                .apply(<span class="keyword">new</span> RestDocumentationConfigurer()).build();
+    }
+
+    <span class="annotation">@Test</span>
+    <span class="directive">public</span> <span class="type">void</span> createSwaggerJson() <span class="directive">throws</span> <span class="exception">Exception</span> {
+        <span class="predefined-type">String</span> outputDir = <span class="predefined-type">System</span>.getProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">io.springfox.staticdocs.outputDir</span><span class="delimiter">&quot;</span></span>);
+        <span class="local-variable">this</span>.mockMvc.perform(get(<span class="string"><span class="delimiter">&quot;</span><span class="content">/v2/api-docs</span><span class="delimiter">&quot;</span></span>)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(SwaggerResultHandler.outputDirectory(outputDir).build())
+                .andExpect(status().isOk());
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_screenshots">6. Screenshots</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_swagger_source">4.1. Swagger source</h3>
+<h3 id="_swagger_source">6.1. Swagger source</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/swagger_json.PNG" alt="swagger_json">
@@ -1145,7 +1408,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generated_asciidoc">4.2. Generated AsciiDoc</h3>
+<h3 id="_generated_asciidoc">6.2. Generated AsciiDoc</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/asciidoc.PNG" alt="asciidoc">
@@ -1153,7 +1416,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generated_markdown">4.3. Generated Markdown</h3>
+<h3 id="_generated_markdown">6.3. Generated Markdown</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/markdown.PNG" alt="markdown">
@@ -1161,7 +1424,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generated_html_using_asciidoctorj">4.4. Generated HTML using AsciidoctorJ</h3>
+<h3 id="_generated_html_using_asciidoctorj">6.4. Generated HTML using AsciidoctorJ</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/asciidoc_html.PNG" alt="asciidoc_html">
@@ -1169,7 +1432,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generated_pdf_using_asciidoctorj">4.5. Generated PDF using AsciidoctorJ</h3>
+<h3 id="_generated_pdf_using_asciidoctorj">6.5. Generated PDF using AsciidoctorJ</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/asciidoc_pdf.PNG" alt="asciidoc_pdf">
@@ -1179,7 +1442,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 </div>
 </div>
 <div class="sect1">
-<h2 id="_license">5. License</h2>
+<h2 id="_license">7. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Copyright 2015 Robert Winkler</p>
@@ -1198,7 +1461,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 </div>
 </div>
 <div class="sect1">
-<h2 id="_community_contributions">6. Community contributions</h2>
+<h2 id="_community_contributions">8. Community contributions</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1216,7 +1479,7 @@ restDocumented.documentXmlSchema(MailStorageQuota.class, <span class="string"><s
 <div id="footer">
 <div id="footer-text">
 Version 0.7.0<br>
-Last updated 2015-06-29 12:23:16 MESZ
+Last updated 2015-06-29 12:29:47 MESZ
 </div>
 </div>
 </body>
