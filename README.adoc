@@ -1,5 +1,5 @@
 = Swagger2Markup Reference documentation
 
-The documentation of Swagger2Markup uses http://asciidoctor.org/[AsciiDoctor] and Gradle to automate the generation of the HTML documentation.
+Swagger2Markup uses http://asciidoctor.org/[AsciiDoctor] and Gradle to automate the generation of the HTML documentation.
 
 The documentation can be found at http://swagger2markup.github.io/swagger2markup-docs/[Reference documentation]
