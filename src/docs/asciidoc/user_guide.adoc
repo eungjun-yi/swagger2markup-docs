@@ -233,9 +233,9 @@ asciidoctor {
 			<configuration>
 				<backend>html</backend>
 				<attributes>
-					<toclevels>2</generated>
-					<toc>left</generated>
-					<doctype>book</generated>
+					<toclevels>2</toclevels>
+					<toc>left</toc>
+					<doctype>book</doctype>
 					<generated>src/docs/asciidoc/generated</generated>
 				</attributes>
 			</configuration>
